@@ -16,6 +16,12 @@ indent_size = 4
 indent_style = space
 indent_size = 2
 
+# Markdown
+[*.md]
+# Unset for easier control of tabs and spaces in code blocks
+indent_style = unset
+indent_size = unset
+
 # Shell
 [*.{sh,bash}]
 indent_style = tab
