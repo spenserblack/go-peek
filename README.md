@@ -1,5 +1,8 @@
 # go-peek
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/spenserblack/go-peek.svg)](https://pkg.go.dev/github.com/spenserblack/go-peek)
+[![CI](https://github.com/spenserblack/go-peek/actions/workflows/ci.yml/badge.svg)](https://github.com/spenserblack/go-peek/actions/workflows/ci.yml)
+
 ## Description
 
 This package helps convert [pull-style iterators][pull-iter] into a form that allows you to peek
