@@ -5,6 +5,7 @@
     "vscode": {
       "extensions": [
         "EditorConfig.EditorConfig",
+        "github.vscode-github-actions",
         "golang.go"
       ]
     }
