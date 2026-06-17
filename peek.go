@@ -1,6 +1,8 @@
 // Package peek provides utilities to peek one item ahead in a pull iterator.
 package peek
 
+import "iter"
+
 // PullFunc is a function that returns the next value from a pull-style iterator. See the
 // documentation for [iter.Pull] for more information.
 type PullFunc[V any] = func() (V, bool)
@@ -30,6 +32,13 @@ func Peek[V any](next PullFunc[V]) (pull PullFunc[V], peek PullFunc[V]) {
 	}
 
 	return pull, peek
+}
+
+// PullPeek converts seq into pull and peek functions and returns the iterator stop function.
+func PullPeek[V any](seq iter.Seq[V]) (pull PullFunc[V], peek PullFunc[V], stop func()) {
+	next, stop := iter.Pull(seq)
+	pull, peek = Peek(next)
+	return pull, peek, stop
 }
 
 // PullFunc2 is a function that returns the next value from a pull-style iterator. See the
@@ -62,4 +71,11 @@ func Peek2[K any, V any](next PullFunc2[K, V]) (pull PullFunc2[K, V], peek PullF
 	}
 
 	return pull, peek
+}
+
+// PullPeek2 converts seq into pull and peek functions and returns the iterator stop function.
+func PullPeek2[K any, V any](seq iter.Seq2[K, V]) (pull PullFunc2[K, V], peek PullFunc2[K, V], stop func()) {
+	next, stop := iter.Pull2(seq)
+	pull, peek = Peek2(next)
+	return pull, peek, stop
 }
