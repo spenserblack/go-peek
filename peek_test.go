@@ -79,6 +79,32 @@ func TestPeek(t *testing.T) {
 	}
 }
 
+func TestPullPeek(t *testing.T) {
+	seq := slices.Values([]string{"one", "two", "three"})
+	pull, peek, stop := PullPeek(seq)
+	defer stop()
+
+	got, ok := pull()
+	if !ok || got != "one" {
+		t.Fatalf(`pull() = (%v, %v), want (%v, %v)`, got, ok, "one", true)
+	}
+
+	got, ok = peek()
+	if !ok || got != "two" {
+		t.Fatalf(`peek() = (%v, %v), want (%v, %v)`, got, ok, "two", true)
+	}
+
+	got, ok = peek()
+	if !ok || got != "two" {
+		t.Fatalf(`peek() again = (%v, %v), want (%v, %v)`, got, ok, "two", true)
+	}
+
+	got, ok = pull()
+	if !ok || got != "two" {
+		t.Fatalf(`pull() after peek = (%v, %v), want (%v, %v)`, got, ok, "two", true)
+	}
+}
+
 func TestPeek2(t *testing.T) {
 	seq := slices.All([]string{"zero", "one", "two"})
 	next, stop := iter.Pull2(seq)
@@ -156,5 +182,31 @@ func TestPeek2(t *testing.T) {
 		if gotKey != tt.wantKey || gotValue != tt.wantValue {
 			t.Fatalf(`key, value = (%v, %v), want (%v, %v)`, gotKey, gotValue, tt.wantKey, tt.wantValue)
 		}
+	}
+}
+
+func TestPullPeek2(t *testing.T) {
+	seq := slices.All([]string{"zero", "one", "two"})
+	pull, peek, stop := PullPeek2(seq)
+	defer stop()
+
+	gotKey, gotValue, ok := pull()
+	if !ok || gotKey != 0 || gotValue != "zero" {
+		t.Fatalf(`pull() = (%v, %v, %v), want (%v, %v, %v)`, gotKey, gotValue, ok, 0, "zero", true)
+	}
+
+	gotKey, gotValue, ok = peek()
+	if !ok || gotKey != 1 || gotValue != "one" {
+		t.Fatalf(`peek() = (%v, %v, %v), want (%v, %v, %v)`, gotKey, gotValue, ok, 1, "one", true)
+	}
+
+	gotKey, gotValue, ok = peek()
+	if !ok || gotKey != 1 || gotValue != "one" {
+		t.Fatalf(`peek() again = (%v, %v, %v), want (%v, %v, %v)`, gotKey, gotValue, ok, 2, "two", true)
+	}
+
+	gotKey, gotValue, ok = pull()
+	if !ok || gotKey != 1 || gotValue != "one" {
+		t.Fatalf(`pull() after peek = (%v, %v, %v), want (%v, %v, %v)`, gotKey, gotValue, ok, 2, "two", true)
 	}
 }
