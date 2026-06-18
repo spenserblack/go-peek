@@ -2,7 +2,6 @@ package peek
 
 import (
 	"iter"
-	"maps"
 	"slices"
 	"testing"
 )
@@ -81,11 +80,7 @@ func TestPeek(t *testing.T) {
 }
 
 func TestPeek2(t *testing.T) {
-	seq := maps.All(map[int]string{
-		1: "one",
-		2: "two",
-		3: "three",
-	})
+	seq := slices.All([]string{"zero", "one", "two"})
 	next, stop := iter.Pull2(seq)
 	defer stop()
 
@@ -101,43 +96,43 @@ func TestPeek2(t *testing.T) {
 		{
 			name:      "pull first",
 			f:         pull,
-			wantKey:   1,
-			wantValue: "one",
+			wantKey:   0,
+			wantValue: "zero",
 			ok:        true,
 		},
 		{
 			name:      "peek second value",
 			f:         peek,
-			wantKey:   2,
-			wantValue: "two",
+			wantKey:   1,
+			wantValue: "one",
 			ok:        true,
 		},
 		{
 			name:      "peek second value again",
 			f:         peek,
-			wantKey:   2,
-			wantValue: "two",
+			wantKey:   1,
+			wantValue: "one",
 			ok:        true,
 		},
 		{
 			name:      "peek second value yet again",
 			f:         peek,
-			wantKey:   2,
-			wantValue: "two",
+			wantKey:   1,
+			wantValue: "one",
 			ok:        true,
 		},
 		{
 			name:      "pull second value",
 			f:         pull,
-			wantKey:   2,
-			wantValue: "two",
+			wantKey:   1,
+			wantValue: "one",
 			ok:        true,
 		},
 		{
 			name:      "pull third value",
 			f:         pull,
-			wantKey:   3,
-			wantValue: "three",
+			wantKey:   2,
+			wantValue: "two",
 			ok:        true,
 		},
 		{
