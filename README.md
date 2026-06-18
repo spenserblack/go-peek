@@ -10,9 +10,6 @@ one value ahead.
 
 ## Example
 
-This is a simplistic example of parsing tokens, where the token `Go` is a special case when
-followed by `pher`.
-
 ```go
 tokens := []string{"Go", "Gopher", "Golang"}
 seq := slices.Values(tokens)
